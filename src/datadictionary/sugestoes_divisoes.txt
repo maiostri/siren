@@ -1,0 +1,8 @@
+classes com metodos estaticos,
+
+getters
+creates
+utils
+near and far
+builds
+

@@ -1,0 +1,9 @@
+postgres:
+	g++ -L /oracle/product/db/lib/ -L /oracle/product/db/rdbms/lib/ -I /oracle/product/db/rdbms/public/ -I /oracle/product/rdbms/db/demo/ -lclntsh `cat /oracle/product/db/lib/sysliblist` -ldl -lm -locci -o DataDictionaryAcess src/Parser.cpp -Isrc -ljpeg -lpqxx -lm -lpq -I/usr/include/dcmtk -I/usr/include/arboretum -I/usr/include/artemis -I/usr/include/opencv -L/usr/include/opencv  -lcv -lhighgui -lstdc++;
+oracle: 
+	g++ -L /oracle/product/db/lib/ -L /oracle/product/db/rdbms/lib/ -I /oracle/product/db/rdbms/public/ -I /oracle/product/rdbms/db/demo/ -lclntsh `cat /oracle/product/db/lib/sysliblist` -ldl -lm -locci -o Banco src/Banco.cpp -Iinclude;
+
+clean:
+	find -name "*~" | xargs rm -rf
+run:
+	./Banco

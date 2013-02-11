@@ -1,0 +1,83 @@
+g++ 
+# Makefile for G++
+#
+#
+# Author: Ricardo Pereira Maiostri
+#
+
+# compiler
+CCC = g++
+# C++ compiler flags (-g -O2 -Wall)
+CCFLAGS = -g
+
+# source files.
+SRC_PATH=
+INCLUDEPATH=
+SRC =  	
+	$(SRCPATH)/Conn.cpp \
+	$(SRCPATH)/ConnOracle.cpp \
+	$(SRCPATH)/ConnPostgres.cpp \
+	$(SRCPATH)/Query.cpp \
+	$(SRCPATH)/QueryPostgres.cpp \
+	$(SRCPATH)/QueryOracle.cpp \
+	$(SRCPATH)/Lex.cpp \
+	$(SRCPATH)/MetricTreeManager.cpp \
+	$(SRCPATH)/DataDictionaryAccess.cpp \
+	$(SRCPATH)/Parser.cpp \
+LIBNAME=../libsiren.a
+
+OBJ = $(SRC:.cpp=.o)
+OUT = ../libutils.a
+
+clean:
+	rm -f $(SRCPATH)/*.o
+
+# include directories
+INCLUDES = 
+			-I. \
+			-I../include/ \
+			-I/usr/local/include \
+			-I/usr/include/dcmtk \
+			-I/usr/include/arboretum \
+			-I/usr/include/artemis \
+			-I/usr/include/opencv \
+			-I /oracle/product/db/rdbms/public/ \
+			-I /oracle/product/rdbms/db/demo/ \
+# library paths
+LIBS = 
+			-L../ \
+			-L/usr/local/lib \
+			-L /oracle/product/db/lib/ \
+			-L /oracle/product/db/rdbms/lib/  \
+			-ldl \
+			-lm \ 
+			-locci \ 
+			-ljpeg \
+			-lpqxx \ 
+			-lpq \
+			-lcv \
+			-lhighgui \
+			-lstdc++ \
+			-lclntsh `cat /oracle/product/db/lib/sysliblist` \
+			-L/usr/include/opencv
+			
+# compile flags
+LDFLAGS = -g
+
+.SUFFIXES: .cpp
+
+default: dep $(OUT)
+
+.cpp.o:
+	$(CCC) $(INCLUDES) $(CCFLAGS) -c $< -o $@
+
+$(OUT): $(OBJ)
+	ar rcs $(OUT) $(OBJ)
+
+depend: dep
+
+dep:
+	makedepend -- $(CFLAGS) -- $(INCLUDES) $(SRC)
+
+clean:
+	rm -f $(OBJ) $(OUT) Makefile.bak 

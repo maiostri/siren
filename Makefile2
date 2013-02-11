@@ -1,0 +1,58 @@
+    ## -*- Makefile for siren tests -*-
+##
+## User: ricardo
+## Time: Sep 20, 2011 9:50:14 AM
+##
+
+#### Compiler and tool definitions shared by all build targets #####
+CCC = g++
+CXX = g++
+BASICOPTS = -g
+CCFLAGS = $(BASICOPTS)
+CXXFLAGS = $(BASICOPTS)
+
+# Define the target directories.
+DESTDIR=/home/ricardo/Dropbox/USP/Iniciacao/siren/trunk
+
+all: $(DESTDIR)/Teste
+
+INCLUDES = \
+	-I$(DESTDIR)/src \
+	-I/usr/include/dcmtk \
+	-I/usr/include/opencv2 \
+	-I/oracle/product/db/rdbms/public/ \
+	-I/oracle/product/rdbms/db/demo/ \
+	-I/usr/include/arboretum \
+	-I/usr/include/artemis	
+LIBS = 	\
+	-L$(DESTDIR)/lib \
+	$(DESTDIR)/lib/libsiren.a \
+	-L/usr/local/lib \
+	-larboretum \
+	-llibartemis \
+	-ldcmnet -ldcmdata -loflog -lofstd \
+	-lopencv_core \
+	-lopencv_highgui \
+	-L /oracle/product/db/lib/ \
+	-L /oracle/product/db/rdbms/lib/ \
+	-ldl -lm -locci \
+	-ljpeg \
+	-lpqxx -lpq \
+	-lclntsh `cat /oracle/product/db/lib/sysliblist` \
+
+$(DESTDIR)/Teste: $(DESTDIR) Testes.cpp
+## compiling
+	make clean
+	make -f Makefile
+	$(CCC) $(CCFLAGS) $(INCLUDES) -o $@ Testes.cpp $(LIBS)		
+
+#### Clean target deletes all generated files ####
+clean:
+	rm -f 
+	    $(DESTDIR)/Teste \
+	    
+
+# Enable dependency checking
+.KEEP_STATE:
+.KEEP_STATE_FILE:.make.state.GNU-amd64-Linux
+
