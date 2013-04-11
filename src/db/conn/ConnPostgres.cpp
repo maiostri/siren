@@ -1,12 +1,12 @@
 /**
-* @file
-*
-* This file implements a connection interface for PostgreSQL.
-*
-* @version 1.0
-* @author Ricardo Pereira Maiostri (maiostri@gmail.com)
-* @date 11-03-2011
-*/
+ * @file
+ *
+ * This file implements a connection interface for PostgreSQL.
+ *
+ * @version 1.0
+ * @author Ricardo Pereira Maiostri (maiostri@gmail.com)
+ * @date 11-03-2011
+ */
 
 #include "ConnPostgres.h"
 
@@ -17,7 +17,7 @@ ConnPostgres::ConnPostgres() : Conn()
 
 ConnPostgres::ConnPostgres(char *username, char *password) : Conn(username, password)
 {
-    createConnection(username,password);
+    createConnection(username, password);
 }
 
 ConnPostgres::~ConnPostgres()
@@ -28,13 +28,13 @@ ConnPostgres::~ConnPostgres()
 void ConnPostgres::createConnection(char *username, char *password)
 {
     try
-        {
+    {
 
-        }
+    }
     catch (const std::exception &e)
-        {
-            std::cerr << e.what() << std::endl;
-        }
+    {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 pqxx::work *ConnPostgres::getWork()

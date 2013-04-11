@@ -1,6 +1,5 @@
 #include "stDynamicZernike.h"
 
-
 tDynamicZernike::tDynamicZernike()
 {
     Size = 256;
@@ -8,8 +7,8 @@ tDynamicZernike::tDynamicZernike()
 }
 
 /**
-* Constructor.
-*/
+ * Constructor.
+ */
 tDynamicZernike::tDynamicZernike(const float * data)
 {
     Size = 256;
@@ -19,45 +18,45 @@ tDynamicZernike::tDynamicZernike(const float * data)
 }
 
 /**
-* Destructor.
-*/
+ * Destructor.
+ */
 tDynamicZernike::~tDynamicZernike()
 {
     delete Data;
 }
 
 /**
-* Clones the object.
-*/
-tDynamicType *tDynamicZernike::Clone()
+ * Clones the object.
+ */
+tDynamicZernike *tDynamicZernike::Clone()
 {
     tDynamicZernike *clone = new tDynamicZernike(this->Data);
-    return (tDynamicType *)clone;
+    return (tDynamicZernike *) clone;
 }
 
 /**
-* Gets the object serialized size
-*/
+ * Gets the object serialized size
+ */
 stSize tDynamicZernike::GetSerializedSize()
 {
-    return sizeof(float) * Size;
+    return sizeof (float) * Size;
 }
 
 /**
-* Returns the object serialization
-*/
+ * Returns the object serialization
+ */
 const stByte * tDynamicZernike::Serialize()
 {
     return (unsigned char *) Data;
 }
 
 /**
-* Restores the serialized object.
-*/
+ * Restores the serialized object.
+ */
 void tDynamicZernike::Unserialize(const stByte * data, stSize dataSize)
 {
     // Resize data
-    Size = dataSize / sizeof(float);
+    Size = dataSize / sizeof (float);
     if (Data != NULL)
         delete Data;
     Data = new float[Size];
@@ -65,39 +64,39 @@ void tDynamicZernike::Unserialize(const stByte * data, stSize dataSize)
 }
 
 /**
-* Tests if one object is equal to another.
-*/
+ * Tests if one object is equal to another.
+ */
 bool tDynamicZernike::IsEqual(tDynamicType * obj)
 {
     bool equal;
     bool stop;
     stSize i;
 
-    if (Size != ((tDynamicZernike *)obj)->Size) return false;
+    if (Size != ((tDynamicZernike *) obj)->Size) return false;
 
     equal = true;
     i = 0;
     stop = (i >= Size);
     while (!stop)
+    {
+        if (Data[i] != ((tDynamicZernike *) obj)->Data[i])
         {
-            if (Data[i] != ((tDynamicZernike *)obj)->Data[i])
-                {
-                    stop = true;
-                    equal = false;
-                }
-            else
-                {
-                    i++;
-                    stop = (i >= Size);
-                }//end if
-        }//end while
+            stop = true;
+            equal = false;
+        }
+        else
+        {
+            i++;
+            stop = (i >= Size);
+        }//end if
+    }//end while
     return equal;
 }
 
 
 /**
-* Extract the zernike from a jpeg file
-*/
+ * Extract the zernike from a jpeg file
+ */
 /*void tDynamicZernike::ExtractZernikeFromJpegFile(std::string filename) {
     JPGImage *jpg = new JPGImage();
     try {
@@ -118,8 +117,8 @@ bool tDynamicZernike::IsEqual(tDynamicType * obj)
 } */
 
 /**
-* Extract the zernike from a jpeg blob
-*/
+ * Extract the zernike from a jpeg blob
+ */
 /* void ExtractZernikeFromJpegBlob(TBlobField *blobfield) {
      TBlobStream *stream = new TBlobStream(blobfield,bmRead);
      JPGImage *jpg = new JPGImage();
@@ -142,27 +141,26 @@ bool tDynamicZernike::IsEqual(tDynamicType * obj)
  } */
 
 /**
-* Extract the zernike from a bitmap
-*/
+ * Extract the zernike from a bitmap
+ */
 /* void tDynamicZernike::ExtractZernikeFromBmp(BMPImage *src) {
     // computing the zernike momentum
     ZernikeFeatures(src, Data);
 } */
 
-
 /**
-* Returns the size
-*/
+ * Returns the size
+ */
 
 
-double tDynamicZernike::zer_pol_R(char n, char m, float  r2)
+double tDynamicZernike::zer_pol_R(char n, char m, float r2)
 {
 
     char i, s, sign, /*exp,*/ lim;
-    double  a,     // (n-s)!
-            b,     //   s!
-            c,     // [(n+|m|)/2-s]!
-            d;     // [(n-|m|)/2-s]!
+    double a, // (n-s)!
+            b, //   s!
+            c, // [(n+|m|)/2-s]!
+            d; // [(n-|m|)/2-s]!
 
     double result;
     float ep;
@@ -170,31 +168,31 @@ double tDynamicZernike::zer_pol_R(char n, char m, float  r2)
     m = abs(m);
 
     sign = a = b = c = d = 1;
-    lim = (n-m) >> 1;
+    lim = (n - m) >> 1;
 
     // Set initial values for s=0
-    for (i=n; i>1; i--)
-        a *= i;         // a = n!  &   b = 0! = 1
-    for (i=(n+m) >> 1; i>1; i--)
+    for (i = n; i > 1; i--)
+        a *= i; // a = n!  &   b = 0! = 1
+    for (i = (n + m) >> 1; i > 1; i--)
         c *= i; // c = [(n+|m|)/2]!
-    for (i=lim; i>1; i--)
-        d *= i;        // d = [(n-|m|)/2-s]!
+    for (i = lim; i > 1; i--)
+        d *= i; // d = [(n-|m|)/2-s]!
 
-    result = ((float)a/(float)(b*c*d)) * (!n?1:pow(r2, (float)n/2.0));
+    result = ((float) a / (float) (b * c * d)) * (!n ? 1 : pow(r2, (float) n / 2.0));
 
-    for (s=1; s <= lim; s++)
-        {
+    for (s = 1; s <= lim; s++)
+    {
 
-            sign *= -1;
-            a /= n - (s - 1);
-            b *= s;
-            c /= ((n+m) >> 1) - (s - 1);
-            d /= ((n-m) >> 1) - (s - 1);
+        sign *= -1;
+        a /= n - (s - 1);
+        b *= s;
+        c /= ((n + m) >> 1) - (s - 1);
+        d /= ((n - m) >> 1) - (s - 1);
 
-            ep = ((float)n/2.0) - s;
-            // ep = n - 2*s;   // original
-            result += (float)sign * ((float)a/(float)(b*c*d)) * (!ep?1:pow(r2, ep));
-        }
+        ep = ((float) n / 2.0) - s;
+        // ep = n - 2*s;   // original
+        result += (float) sign * ((float) a / (float) (b * c * d)) * (!ep ? 1 : pow(r2, ep));
+    }
 
     return result;
 }
@@ -202,19 +200,19 @@ double tDynamicZernike::zer_pol_R(char n, char m, float  r2)
 inline void tDynamicZernike::zer_pol(short n, short m, float x, float y, TNComplex *result)
 {
 
-    double  R, arg;
+    double R, arg;
     float r2;
 
     r2 = SQR(x) + SQR(y);
 
     if (!r2)
-        {
-            result->re = 0;
-            result->im = 0;
-            return;
-        }
+    {
+        result->re = 0;
+        result->im = 0;
+        return;
+    }
 
-    R = zer_pol_R(n, m , r2);
+    R = zer_pol_R(n, m, r2);
     //if (R>1) ShowMessage(IntToStr(n) + " : " + IntToStr(m) + " : " + FloatToStr(R));
     arg = m * atan2(y, x);
     result->re = R * cos(arg);
@@ -239,29 +237,29 @@ inline void tDynamicZernike::zer_mom(BMPImage *bitmap, short n, short m, short x
     w = bitmap->getWidth();
 
     unsigned char d;
-    for (l=0; l < h; l++)
+    for (l = 0; l < h; l++)
+    {
+
+        for (c = 0; c < w; c++)
         {
+            y = (float) (l - yc) / yscale;
+            x = (float) (c - xc) / xscale;
 
-            for (c=0; c < w; c++)
-                {
-                    y = (float)(l-yc)/yscale;
-                    x = (float)(c-xc)/xscale;
+            pixel = bitmap->getPixel(l, c);
+            d += pixel.getRedPixelValue();
+            d += pixel.getRedPixelValue();
+            d += pixel.getRedPixelValue();
 
-                    pixel = bitmap->getPixel(l,c);
-                    d += pixel.getRedPixelValue();
-                    d += pixel.getRedPixelValue();
-                    d += pixel.getRedPixelValue();
-
-                    if ((SQR(x) + SQR(y)) <= 1)
-                        {
-                            zer_pol(n, m, x, y, &zerp);
-                            result->re +=  d *  zerp.re;
-                            result->im += d * (-zerp.im);
-                        }
-                }
+            if ((SQR(x) + SQR(y)) <= 1)
+            {
+                zer_pol(n, m, x, y, &zerp);
+                result->re += d * zerp.re;
+                result->im += d * (-zerp.im);
+            }
         }
+    }
 
-    z = (float)(n+1)/(float)M_PI;
+    z = (float) (n + 1) / (float) M_PI;
 
     result->re *= z;
     result->im *= z;
@@ -286,14 +284,14 @@ inline TNComplex *tDynamicZernike::ZernikeMoments(short n, BMPImage *bitmap, sho
 
     // Determines the number of moments of n_th order and allocates memory for output vector "result"
     num_moments = 0;
-    for (m=n; m >= 0; m--)
+    for (m = n; m >= 0; m--)
         num_moments += (m >> 1) + 1;
     result = new TNComplex[num_moments];
 
     count = 0;
 
-    for (_n=0; _n <= n; _n++)
-        for (m = _n; m >= 0; m-=2)
+    for (_n = 0; _n <= n; _n++)
+        for (m = _n; m >= 0; m -= 2)
             zer_mom(bitmap, _n, m, xc, yc, xscale, yscale, &(result[count++]));
 
     *moments_count = num_moments;
@@ -305,7 +303,7 @@ inline std::vector<TNComplex> *tDynamicZernike::ZernikeRealPolynomial(char n, ch
     std::vector<TNComplex> *series;
     TNComplex temp;
     float r2;
-    for (r2 = 0; r2<=1; r2+=0.001)
+    for (r2 = 0; r2 <= 1; r2 += 0.001)
         temp.im = r2;
     temp.re = zer_pol_R(n, m, r2);
     series->push_back(temp);
@@ -323,8 +321,8 @@ inline void tDynamicZernike::ZernikeFeatures(BMPImage *bitmap, float *zernike)
 
     z = moments[0].re;
 
-    for (i=0; i<count; i++)
-        zernike[i] = sqrt(SQR(moments[i].re) + SQR(moments[i].im))/z;
+    for (i = 0; i < count; i++)
+        zernike[i] = sqrt(SQR(moments[i].re) + SQR(moments[i].im)) / z;
 
     delete moments;
 }

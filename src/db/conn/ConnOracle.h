@@ -13,28 +13,29 @@
 
 #include "Conn.h"
 
-class ConnOracle: public Conn {
+class ConnOracle : public Conn
+{
 private:
-	oracle::occi::Environment* env;
-	oracle::occi::Connection* conn;
-	oracle::occi::ResultSet *rs;
+  oracle::occi::Environment* env;
+  oracle::occi::Connection* conn;
+  oracle::occi::ResultSet *rs;
 
 public:
-	ConnOracle();
+  ConnOracle ();
 
-	ConnOracle(const std::string& username,const std::string& password);
+  ConnOracle (const std::string& username, const std::string& password);
 
-	~ConnOracle();
+  ~ConnOracle ();
 
-	void createConnection(const std::string& username,
-			const std::string& password);
+  void createConnection (const std::string& username,
+                         const std::string& password);
 
-	void Commit();
+  void Commit ();
 
-	void closeConnection();
+  void closeConnection ();
 
-	oracle::occi::Connection *getConnection();
+  oracle::occi::Connection *getConnection ();
 
-	oracle::occi::Environment *getEnvironment();
+  oracle::occi::Environment *getEnvironment ();
 };
 #endif

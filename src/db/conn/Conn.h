@@ -11,48 +11,52 @@
 #ifndef __CONN_H
 #define __CONN_H
 
-#include <string.h>
+#include <string>
 #include <iostream>
 #include <stdio.h>
 #include <occi.h>
 #include <occiControl.h>
 #include <pqxx/pqxx>
 
-namespace Connections {
-enum eConnections {
-	ORACLE = 1, POSTGRESQL = 2
-};
+namespace Connections
+{
+
+  enum eConnections
+  {
+    ORACLE = 1, POSTGRESQL = 2
+  };
 }
 
-class Conn {
+class Conn
+{
 private:
-	std::string username;
-	std::string password;
+  std::string username;
+  std::string password;
 
 public:
 
-	Conn();
+  Conn ();
 
-	Conn(const std::string& username, const std::string& password);
+  Conn (const std::string& username, const std::string& password);
 
-	virtual ~Conn();
+  virtual ~Conn ();
 
-	virtual void setUsername(const std::string& username);
+  virtual void setUsername (const std::string& username);
 
-	virtual void setPassword(const std::string& password);
+  virtual void setPassword (const std::string& password);
 
-	virtual std::string getUsername();
+  virtual std::string getUsername ();
 
-	virtual std::string getPassword();
+  virtual std::string getPassword ();
 
-	virtual oracle::occi::Connection *getConnection();
+  virtual oracle::occi::Connection *getConnection ();
 
-	virtual void createConnection(const std::string& username,
-			const std::string& password);
+  virtual void createConnection (const std::string& username,
+                                 const std::string& password);
 
-	virtual void Commit();
+  virtual void Commit ();
 
-	virtual void closeConnection();
+  virtual void closeConnection ();
 
 };
 

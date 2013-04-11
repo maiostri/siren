@@ -1,8 +1,8 @@
 /**
-* @file
-*
-* This file implements the dynamic Zernike object.
-*/
+ * @file
+ *
+ * This file implements the dynamic Zernike object.
+ */
 #ifndef __STDYNAMICZERNIKE_H
 #define __STDYNAMICZERNIKE_H
 
@@ -16,136 +16,103 @@
 
 typedef struct
 {
-    double im, re;
+  double im, re;
 } TNComplex;
 
-std::vector<TNComplex> *ZernikeRealPolynomial(char n, char m);
-TNComplex *ZernikeMoments(short n, BMPImage *bitmap, short *moments_count);
-void ZernikeFeatures(BMPImage *bitmap, float *zernike);
+std::vector<TNComplex> *ZernikeRealPolynomial (char n, char m);
+TNComplex *ZernikeMoments (short n, BMPImage *bitmap, short *moments_count);
+void
+ZernikeFeatures (BMPImage *bitmap, float *zernike);
 
 /**
-* This class implements the Zernike object.
-* Code adapted from Andre Balan's code
-*/
+ * This class implements the Zernike object.
+ * Code adapted from Andre Balan's code
+ */
 class tDynamicZernike : public tDynamicType
 {
 private:
-    /**
-    * Pointer to the data vector
-    */
-    float * Data;
+  /**
+   * Pointer to the data vector
+   */
+  float * Data;
 
-    /**
-    * Size of the data vector
-    */
-    stSize Size;
+  /**
+   * Size of the data vector
+   */
+  stSize Size;
 
 
 
 public:
-    /**
-    * Default constructor.
-    */
-    tDynamicZernike();
+  /**
+   * Default constructor.
+   */
+  tDynamicZernike ();
 
-    /**
-    * Constructor.
-    */
-    tDynamicZernike(const float * data);
+  /**
+   * Constructor.
+   */
+  tDynamicZernike (const float * data);
 
-    /**
-    * Destructor.
-    */
-    virtual ~tDynamicZernike();
+  /**
+   * Destructor.
+   */
+  virtual ~tDynamicZernike ();
 
-    /**
-    * Clones the object.
-    */
-    virtual tDynamicType *Clone();
+  /**
+   * Clones the object.
+   */
+  virtual tDynamicZernike *Clone ();
 
-    /**
-    * Gets the object serialized size
-    */
-    virtual stSize GetSerializedSize();
+  /**
+   * Gets the object serialized size
+   */
+  virtual stSize GetSerializedSize ();
 
-    /**
-    * Returns the object serialization
-    */
-    virtual const stByte * Serialize();
+  /**
+   * Returns the object serialization
+   */
+  virtual const stByte * Serialize ();
 
-    /**
-    * Restores the serialized object.
-    */
-    virtual void Unserialize(const stByte * data, stSize dataSize);
+  /**
+   * Restores the serialized object.
+   */
+  virtual void Unserialize (const stByte * data, stSize dataSize);
 
-    /**
-    * Tests if one object is equal to another.
-    */
-    virtual bool IsEqual(tDynamicType * obj);
+  /**
+   * Tests if one object is equal to another.
+   */
+  virtual bool IsEqual (tDynamicType * obj);
 
+  stSize
+  GetSize ()
+  {
+    return tDynamicZernike::Size;
+  }
 
-    /**
-    * Extract the zernike from a jpeg file
-    */
-    // void ExtractZernikeFromJpegFile(std::string filename);
+  /**
+   * Returns a value
+   */
+  float
+  GetData (stSize index)
+  {
+    if (index < Size)
+      return Data[index];
+    else
+      return -1;
+  }
 
-    /**
-    * Extract the zernike from a jpeg blob
-    */
-    /* void ExtractZernikeFromJpegBlob(TBlobField *blobfield) {
-         TBlobStream *stream = new TBlobStream(blobfield,bmRead);
-         JPGImage *jpg = new JPGImage();
-         try {
-             jpg->LoadFromStream(stream);
-         }
-         catch(...) {
-         }
+  double zer_pol_R (char n, char m, float r2);
 
-         BMPImage *bmp = new BMPImage();
-         bmp->Assign(jpg);
-         bmp->setHeight(jpg->getHeight());
-         bmp->setWidth(jpg->getWidth());
+  void zer_pol (short n, short m, float x, float y, TNComplex *result);
 
-         ExtractZernikeFromBmp(bmp);
+  void zer_mom (BMPImage *bitmap, short n, short m, short xc, short yc, float xscale, float yscale, TNComplex *result);
 
-         delete bmp;
-         delete jpg;
-         delete stream;
-     } */
+  TNComplex *ZernikeMoments (short n, BMPImage *bitmap, short *moments_count);
 
-    /**
-    * Extract the zernike from a bitmap
-    */
-    //void ExtractZernikeFromBmp(BMPImage *src);
+  std::vector<TNComplex> *ZernikeRealPolynomial (char n, char m);
 
-    stSize GetSize()
-    {
-        return tDynamicZernike::Size;
-    }
-
-    /**
-    * Returns a value
-    */
-    float GetData(stSize index)
-    {
-        if (index < Size)
-            return Data[index];
-        else
-            return -1;
-    }
-
-
-    double zer_pol_R(char n, char m, float  r2);
-
-    void zer_pol(short n, short m, float x, float y, TNComplex *result);
-
-    void zer_mom(BMPImage *bitmap, short n, short m, short xc, short yc, float xscale, float yscale, TNComplex *result);
-
-    TNComplex *ZernikeMoments(short n, BMPImage *bitmap, short *moments_count);
-
-    std::vector<TNComplex> *ZernikeRealPolynomial(char n, char m);
-
-    void ZernikeFeatures(BMPImage *bitmap, float *zernike);
+  void ZernikeFeatures (BMPImage *bitmap, float *zernike);
 
 };
 #endif

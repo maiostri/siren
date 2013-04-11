@@ -1,14 +1,14 @@
 /**
-* @file
-*
-* This file implements lex analiser.
-*
-* @version 1.0
-*
-* @author Humberto Luiz Razente (hlr@icmc.usp.br)
-* @author Maria Camila Nardini Barioni (mcamila@icmc.usp.br)
-* @todo Documentation review and tests.
-*/
+ * @file
+ *
+ * This file implements lex analiser.
+ *
+ * @version 1.0
+ *
+ * @author Humberto Luiz Razente (hlr@icmc.usp.br)
+ * @author Maria Camila Nardini Barioni (mcamila@icmc.usp.br)
+ * @todo Documentation review and tests.
+ */
 
 //---------------------------------------------------------------------------
 
@@ -73,172 +73,176 @@
 #define LK_MAX_SG               212
 
 /**
-* This class implements the token!
-*
-* @author Humberto Luiz Razente (hlr@icmc.usp.br)
-* @author Maria Camila Nardini Barioni (mcamila@icmc.usp.br)
-*/
+ * This class implements the token!
+ *
+ * @author Humberto Luiz Razente (hlr@icmc.usp.br)
+ * @author Maria Camila Nardini Barioni (mcamila@icmc.usp.br)
+ */
 class Token
 {
 public:
-    /**
-    * Token constructor!!!
-    */
-    Token ()
-    {
-        Lexem = "";
-        TokenType = TK_UNDEFINED;
-        LexemType = LK_UNDEFINED;
-        ScopePosition = -1;
-        Prior = NULL;
-        Next = NULL;
-    }
 
-    /**
-    * Token destructor!!!
-    */
-    ~Token () {}
+  /**
+   * Token constructor!!!
+   */
+  Token ()
+  {
+    Lexem = "";
+    TokenType = TK_UNDEFINED;
+    LexemType = LK_UNDEFINED;
+    ScopePosition = -1;
+    Prior = NULL;
+    Next = NULL;
+  }
 
-    /**
-    * Clones the token.
-    */
-    Token *Clone()
-    {
-        Token *t = new Token();
-        t->Lexem = this->Lexem;
-        t->TokenType = this->TokenType;
-        t->LexemType = this->LexemType;
-        t->ScopePosition = this->ScopePosition;
-        t->Prior = NULL;
-        t->Next = NULL;
-        return t;
-    }
+  /**
+   * Token destructor!!!
+   */
+  ~Token () { }
 
-    /**
-    * Lexem: string of the token from input string
-    */
+  /**
+   * Clones the token.
+   */
+  Token *
+  Clone ()
+  {
+    Token *t = new Token ();
+    t->Lexem = this->Lexem;
+    t->TokenType = this->TokenType;
+    t->LexemType = this->LexemType;
+    t->ScopePosition = this->ScopePosition;
+    t->Prior = NULL;
+    t->Next = NULL;
+    return t;
+  }
 
-    std::string Lexem;
+  /**
+   * Lexem: string of the token from input string
+   */
 
-    /**
-    * TokenType: defines the type of the token: TK_IDENTIFIER, TK_INTEGER, TK_STRING, etc
-    */
-    int TokenType;
+  std::string Lexem;
 
-    /**
-    * LexemType: defines the type of the lexem: LK_COLUMN_NAME, LK_TABLE_NAME, etc
-    */
-    int LexemType;
+  /**
+   * TokenType: defines the type of the token: TK_IDENTIFIER, TK_INTEGER, TK_STRING, etc
+   */
+  int TokenType;
 
-    /**
-    * ScopePosition: defines the position of the scope in the list of token lists
-    */
-    int ScopePosition;
+  /**
+   * LexemType: defines the type of the lexem: LK_COLUMN_NAME, LK_TABLE_NAME, etc
+   */
+  int LexemType;
 
-    /**
-    * Prior: pointer to the prior token
-    */
-    Token *Prior;
+  /**
+   * ScopePosition: defines the position of the scope in the list of token lists
+   */
+  int ScopePosition;
 
-    /**
-    * Next: pointer to the next token, to form a token list
-    */
-    Token *Next;
+  /**
+   * Prior: pointer to the prior token
+   */
+  Token *Prior;
+
+  /**
+   * Next: pointer to the next token, to form a token list
+   */
+  Token *Next;
 private:
 };
 
 /**
-* This class implements the lex analiser!
-*
-* @author Humberto Luiz Razente (hlr@icmc.usp.br)
-* @author Maria Camila Nardini Barioni (mcamila@icmc.usp.br)
-*/
+ * This class implements the lex analiser!
+ *
+ * @author Humberto Luiz Razente (hlr@icmc.usp.br)
+ * @author Maria Camila Nardini Barioni (mcamila@icmc.usp.br)
+ */
 class Lex
 {
 public:
-    /**
-    * Lex constructor!!!
-    */
-    Lex ()
-    {
-        Position = 0;
-        NullCount = 0;
-    }
 
-    /**
-    * Lex destructor!!!
-    */
-    ~Lex () {}
+  /**
+   * Lex constructor!!!
+   */
+  Lex ()
+  {
+    Position = 0;
+    NullCount = 0;
+  }
 
-    /**
-    * GetToken returns the next token, including the lexem and the token type
-    * @todo Implementar o ponto flutuante e 'strings'.
-    */
-    Token *GetToken ();
+  /**
+   * Lex destructor!!!
+   */
+  ~Lex () { }
 
-    /**
-    * Returns the position of the state engine
-    */
-    int GetPosition()
-    {
-        return Position;
-    }
+  /**
+   * GetToken returns the next token, including the lexem and the token type
+   * @todo Implementar o ponto flutuante e 'strings'.
+   */
+  Token *GetToken ();
 
-    /**
-    * Method used for the data input
-    */
-    void Input(std::string s);
+  /**
+   * Returns the position of the state engine
+   */
+  int
+  GetPosition ()
+  {
+    return Position;
+  }
+
+  /**
+   * Method used for the data input
+   */
+  void Input (std::string s);
 
 private:
-    /**
-    * Position of the state engine
-    */
-    int Position;
+  /**
+   * Position of the state engine
+   */
+  int Position;
 
-    /**
-    * Counts how many GetChar() calls returned 0 characters, indicating end of string
-    */
-    int NullCount;
+  /**
+   * Counts how many GetChar() calls returned 0 characters, indicating end of string
+   */
+  int NullCount;
 
-    /**
-    * Input text length
-    */
-    int Length;
+  /**
+   * Input text length
+   */
+  int Length;
 
-    /**
-    * State of the state engine: ST_BEGIN, ST_END or ST_ERROR
-    */
-    int state;
+  /**
+   * State of the state engine: ST_BEGIN, ST_END or ST_ERROR
+   */
+  int state;
 
-    /**
-    * Input string
-    */
-    std::string input;
+  /**
+   * Input string
+   */
+  std::string input;
 
-    /**
-    * Method used on method GetToken() to pick next character
-    */
-    char GetChar();
+  /**
+   * Method used on method GetToken() to pick next character
+   */
+  char GetChar ();
 
-    /**
-    * Method used on method GetToken() to return to the input a character
-    */
-    void UnGetChar(Token *token);
+  /**
+   * Method used on method GetToken() to return to the input a character
+   */
+  void UnGetChar (Token *token);
 
-    /**
-    * Method used on method GetToken() to return to the input a character
-    */
-    void UnGetChar();
+  /**
+   * Method used on method GetToken() to return to the input a character
+   */
+  void UnGetChar ();
 
-    /**
-    * Method used on method GetToken() to process the integer number part
-    */
-    void integer_number_part(Token *token);
+  /**
+   * Method used on method GetToken() to process the integer number part
+   */
+  void integer_number_part (Token *token);
 
-    /**
-    * Method used on method GetToken() to process exponentials
-    */
-    void exponential(Token *token);
+  /**
+   * Method used on method GetToken() to process exponentials
+   */
+  void exponential (Token *token);
 };
 
 #endif

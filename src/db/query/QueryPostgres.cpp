@@ -9,7 +9,6 @@
  */
 #include "QueryPostgres.h"
 
-
 QueryPostgres::QueryPostgres(const char *connection)
 {
     this->connection = connection;
@@ -17,39 +16,42 @@ QueryPostgres::QueryPostgres(const char *connection)
 
 void QueryPostgres::Open(const string& sql)
 {
-    try {
+    try
+    {
         pqxx::connection conn(connection);
         pqxx::work Xaction(conn);
         ret = Xaction.exec(sql);
         row = ret.begin();
-    } catch (exception &e) {
+    }
+    catch (exception &e)
+    {
         cerr << e.what() << endl;
     }
 }
 
 void QueryPostgres::Run(const string& sql)
 {
-    try {
+    try
+    {
         pqxx::connection conn(connection);
         pqxx::work Xaction(conn);
         Xaction.exec(sql);
         Xaction.commit();
-    } catch (exception &e) {
+    }
+    catch (exception &e)
+    {
         cerr << e.what() << endl;
     }
 }
 
-void QueryPostgres::First()
-{
-    row = ret.begin();
-}
-
 int QueryPostgres::Next()
 {
-    if (row != ret.end()) {
+    if (row != ret.end())
+    {
         ++row;
         return 1;
-    } else
+    }
+    else
         return 0;
 }
 
@@ -105,29 +107,45 @@ int QueryPostgres::countRows(const string& table)
 }
 
 void QueryPostgres::mountInsert(const string& tableName, const vector<string>& fieldNames, vector<char *>&
-        tDynamicObjectCharVector)
+                                tDynamicObjectCharVector, const int& imageid, const string& fileName)
 {
 }
 
-void QueryPostgres::dropTable(const string& table) {
+void QueryPostgres::dropTable(const string& table)
+{
+
+}
+
+void QueryPostgres::createSequence(const string& sequenceName, const int& startWith)
+{
+
+}
+
+void QueryPostgres::dropSequence(const string& sequence)
+{
+
+}
+
+void QueryPostgres::RunPLSQL(const string& sql)
+{
+
+}
+
+void QueryPostgres::blobFieldDumpToFileByIndex(const int& index, const string& filename)
+{
+
+}
+
+char* QueryPostgres::blobFieldDumpToCharByName(const string& field) {
     
 }
 
-void QueryPostgres::createSequence(const string& sequenceName, const int& startWith) {
-    
-}
-void QueryPostgres::dropSequence(const string& sequence) {
+eDataTypes QueryPostgres::getFieldType(const int& index) {
     
 }
 
-void QueryPostgres::RunPLSQL (const string& sql) {
-    
-}
 
-char * QueryPostgres::blobFieldDumpToCharByName(const string& field) {
-    return NULL;
-}
+int QueryPostgres::runSequence(const string& sequenceName)
+{
 
-int QueryPostgres::runSequence(const string& sequenceName) {
-    
 }

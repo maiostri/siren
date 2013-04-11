@@ -26,47 +26,50 @@ public:
   QueryPostgres (const char *connection);
 
   ~QueryPostgres () { };
+  
+  void blobFieldDumpToFileByIndex(const int& index, const string& filename);
+  
+  char* blobFieldDumpToCharByName(const string& field);
+  
+  void createSequence (const string& sequenceName, const int& startWith);
+  
+  int countRows(const string& table);
+  
+  void dropTable (const string& table);
 
+  double DoubleFieldByIndex (const int& index);
+  
+  void dropSequence (const string& sequence);
+  
+  int Eof ();
+  
+  int FieldsCount ();
+  
+  int FieldIsNullByIndex (const int& index);
+
+  string FieldNameByIndex (const int& index);
+
+  float FloatFieldByIndex (const int& index);
+  
+  eDataTypes getFieldType(const int& index);
+  
+  int IntFieldByIndex (const int& index);
+
+  void mountInsert (const string& tableName, const vector<string>& fieldNames, vector<char *>&
+                    tDynamicObjectCharVector, const int& imageid, const string& fileName);
+
+  int Next ();
+  
   void Open (const string& sql);
 
   void Run (const string& sql);
 
   void RunPLSQL (const string& sql);
-
-  void First ();
-
-  int Next ();
-
-  int FieldsCount ();
-
-  int Eof ();
+  
+  int runSequence (const string& sequenceName);
 
   string StringFieldByIndex (const int& index);
 
-  int IntFieldByIndex (const int& index);
-
-  float FloatFieldByIndex (const int& index);
-
-  double DoubleFieldByIndex (const int& index);
-
-  string FieldNameByIndex (const int& index);
-
-  int FieldIsNullByIndex (const int& index);
-
-  int countRows (const string& table);
-
-  void dropTable (const string& table);
-
-  void createSequence (const string& sequenceName, const int& startWith);
-
-  void dropSequence (const string& sequence);
-
-  void mountInsert (const string& tableName, const vector<string>& fieldNames, vector<char *>&
-                    tDynamicObjectCharVector);
-
-  char * blobFieldDumpToCharByName (const string& field);
-  
-  int runSequence(const string& sequenceName);
 
 };
 

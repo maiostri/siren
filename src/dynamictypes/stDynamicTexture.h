@@ -1,8 +1,8 @@
 /**
-* @file
-*
-* This file implements the dynamic texture object
-*/
+ * @file
+ *
+ * This file implements the dynamic texture object
+ */
 #ifndef __STDYNAMICTEXTURE_H
 #define __STDYNAMICTEXTURE_H
 
@@ -10,161 +10,159 @@
 
 #include "stDynamicType.h"
 
-typedef double DescrMatrix[4][5];    // [ang][dist]
+typedef double DescrMatrix[4][5]; // [ang][dist]
 typedef double RungMatrix[4][5][16]; // [ang][dist][degrau]
 
-
 /**
-* This class implements the Texture object
-* Code adapted from Joaquim Felipe's code
-*/
-class tDynamicTexture : tDynamicType
+ * This class implements the Texture object
+ * Code adapted from Joaquim Felipe's code
+ */
+class tDynamicTexture : public tDynamicType
 {
-
 private:
-    /**
-    * Serialized object
-    */
-    stByte *Serialized;
+  /**
+   * Serialized object
+   */
+  stByte *Serialized;
 
 public:
-    /**
-    * Entropy matrix
-    */
-    DescrMatrix EntropyMatrix;
+  /**
+   * Entropy matrix
+   */
+  DescrMatrix EntropyMatrix;
 
-    /**
-    * homogeneity matrix
-    */
-    DescrMatrix HomogenMatrix;
-    /**
-    * Uniformity matrix
-    */
-    DescrMatrix UniformMatrix;
+  /**
+   * homogeneity matrix
+   */
+  DescrMatrix HomogenMatrix;
+  /**
+   * Uniformity matrix
+   */
+  DescrMatrix UniformMatrix;
 
-    /**
-    * Third order moment or distortion
-    */
-    DescrMatrix Moment3Matrix;
+  /**
+   * Third order moment or distortion
+   */
+  DescrMatrix Moment3Matrix;
 
-    /**
-    * Variance or contrast matrix
-    */
-    DescrMatrix VarianceMatrix;
+  /**
+   * Variance or contrast matrix
+   */
+  DescrMatrix VarianceMatrix;
 
-    /**
-    * Inverse variance or inverse contrast
-    */
-    DescrMatrix VarInvMatrix;
+  /**
+   * Inverse variance or inverse contrast
+   */
+  DescrMatrix VarInvMatrix;
 
-    /**
-    * degree (gradient) matrix
-    */
-    RungMatrix RungMatrixx;
+  /**
+   * degree (gradient) matrix
+   */
+  RungMatrix RungMatrixx;
 
-    /**
-     * Default constructor.
-     */
-    tDynamicTexture();
-
-
-    /**
-    *  This constructor copies the values of the object pointed by obj
-    */
-    tDynamicTexture(tDynamicType *o);
+  /**
+   * Default constructor.
+   */
+  tDynamicTexture ();
 
 
-    /**
-    * Destructor.
-    */
-    virtual ~tDynamicTexture();
+  /**
+   *  This constructor copies the values of the object pointed by obj
+   */
+  tDynamicTexture (tDynamicType *o);
 
 
-    /**
-    * Clone method.
-    */
-    virtual tDynamicType *Clone();
+  /**
+   * Destructor.
+   */
+  virtual ~tDynamicTexture ();
 
 
-    /**
-    * Determines if this instance is equal to another instance.
-    */
-    virtual bool IsEqual(tDynamicType * o);
-
-    virtual void * Get(stCount idx);
-
-    virtual stSize GetSize();
-
-    /**
-    * Gets the serialized size
-    */
-    virtual stSize GetSerializedSize();
+  /**
+   * Clone method.
+   */
+  virtual tDynamicTexture *Clone ();
 
 
-    /**
-    * Serialization
-    */
-    virtual const stByte * Serialize();
+  /**
+   * Determines if this instance is equal to another instance.
+   */
+  virtual bool IsEqual (tDynamicType * o);
+
+  virtual void * Get (stCount idx);
+
+  virtual stSize GetSize ();
+
+  /**
+   * Gets the serialized size
+   */
+  virtual stSize GetSerializedSize ();
 
 
-
-    /**
-    * Unserialize
-    */
-    virtual void Unserialize(const stByte * data, stSize datasize);
+  /**
+   * Serialization
+   */
+  virtual const stByte * Serialize ();
 
 
 
-
-    /**
-    * Extract the texture from a jpeg file
-    */
-    //void ExtractTextureFromJpegFile(std::string filename);
-
+  /**
+   * Unserialize
+   */
+  virtual void Unserialize (const stByte * data, stSize datasize);
 
 
-    /**
-    * Extract the texture from a bitmap
-    */
-    void ExtractTexture(const Image *image);
+
+
+  /**
+   * Extract the texture from a jpeg file
+   */
+  //void ExtractTextureFromJpegFile(std::string filename);
+
+
+
+  /**
+   * Extract the texture from a bitmap
+   */
+  void ExtractTexture (const Image *image);
 
 
 };
 
 /**
-* This class implements the Texture distance evaluator
-* Code adapted from Joaquim Felipe's code
-*/
+ * This class implements the Texture distance evaluator
+ * Code adapted from Joaquim Felipe's code
+ */
 class tDynamicTextureDistanceEvaluator
 {
 private:
 
-    /**
-    * Computes the distance between two DescrMatrix
-    */
-    double distance(DescrMatrix feature1, DescrMatrix feature2);
+  /**
+   * Computes the distance between two DescrMatrix
+   */
+  double distance (DescrMatrix feature1, DescrMatrix feature2);
 
 
-    /**
-    * Computes the distance between two RungMatrix
-    */
-    double distance(RungMatrix feature1, RungMatrix feature2);
+  /**
+   * Computes the distance between two RungMatrix
+   */
+  double distance (RungMatrix feature1, RungMatrix feature2);
 
 public:
 
-    /**
-    * Gets the distance between two tDynamicTexture objects
-    */
-    double GetDistance(tDynamicTexture *obj1, tDynamicTexture *obj2);
+  /**
+   * Gets the distance between two tDynamicTexture objects
+   */
+  double GetDistance (tDynamicTexture *obj1, tDynamicTexture *obj2);
 
 
 
-    /**
-    * Gets the square distance between two tDynamicTexture objects
-    */
-    double GetDistance2(tDynamicTexture *obj1, tDynamicTexture *obj2);
+  /**
+   * Gets the square distance between two tDynamicTexture objects
+   */
+  double GetDistance2 (tDynamicTexture *obj1, tDynamicTexture *obj2);
 
 
-};//end class tDynamicTextureDistanceEvaluator
+}; //end class tDynamicTextureDistanceEvaluator
 
 #endif
