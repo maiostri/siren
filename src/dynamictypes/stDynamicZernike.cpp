@@ -93,66 +93,6 @@ bool tDynamicZernike::IsEqual(tDynamicType * obj)
     return equal;
 }
 
-
-/**
- * Extract the zernike from a jpeg file
- */
-/*void tDynamicZernike::ExtractZernikeFromJpegFile(std::string filename) {
-    JPGImage *jpg = new JPGImage();
-    try {
-        jpg->openImage(filename);
-    }
-    catch(...) {
-    }
-
-    BMPImage *bmp = new BMPImage();
-    bmp->openImage(filename);
-    bmp->setHeight(jpg->getHeight());
-    bmp->setWidth(jpg->getWidth());
-
-    ExtractZernikeFromBmp(bmp);
-
-    delete bmp;
-    delete jpg;
-} */
-
-/**
- * Extract the zernike from a jpeg blob
- */
-/* void ExtractZernikeFromJpegBlob(TBlobField *blobfield) {
-     TBlobStream *stream = new TBlobStream(blobfield,bmRead);
-     JPGImage *jpg = new JPGImage();
-     try {
-         jpg->LoadFromStream(stream);
-     }
-     catch(...) {
-     }
-
-     BMPImage *bmp = new BMPImage();
-     bmp->Assign(jpg);
-     bmp->setHeight(jpg->getHeight());
-     bmp->setWidth(jpg->getWidth());
-
-     ExtractZernikeFromBmp(bmp);
-
-     delete bmp;
-     delete jpg;
-     delete stream;
- } */
-
-/**
- * Extract the zernike from a bitmap
- */
-/* void tDynamicZernike::ExtractZernikeFromBmp(BMPImage *src) {
-    // computing the zernike momentum
-    ZernikeFeatures(src, Data);
-} */
-
-/**
- * Returns the size
- */
-
-
 double tDynamicZernike::zer_pol_R(char n, char m, float r2)
 {
 

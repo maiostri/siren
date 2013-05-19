@@ -72,6 +72,20 @@ public:
 
     virtual void setData(double *data);
 
+    /**
+     * Gets the size of the dynamic type.
+     * @return
+     * 	size.
+     */
+    stSize getSize();
+
+
+    /**
+     * Gets the data of the dynamic type.
+     * @return
+     * 		data.
+     */
+    double * getData();
 };
 
 

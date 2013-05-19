@@ -2517,17 +2517,6 @@ void DataDictionaryAccess::IndexParticulateAttribute(const string& tablename, co
 	delete IndexFile;
 }
 
-//---------------------------------------------------------------------------
-
-//VALIDAR O QUE FOI FEITO PARA O TRATAMENTO DE ERRO QUANDO NAO EH POSSIVEL ABRIR UM ARQUIVO NO LO_IMPORT
-//FAZER TAMBEM PARA InsertAudioAPV  <---------
-//Colocar toda a funcao abaixo no relatorio e tambem as linhas:
-//if (FileExists(f_name))
-//  errors = datadictionary->InsertImageIPV(tab_name, attrib_name, f_name, id, CommandList);
-//da funcao void Parser::insert_statement() { no arquivo parser.cpp
-// There isn't differences on what kind of file we're dealing with.
-// Even with a sound file, the only thing that will change it's the header of the table, since database storage methods will be same.
-
 int DataDictionaryAccess::InsertImageIPV(string tablename, string stillimagename, string imagefile, long imageid) {
 
 	string sql;

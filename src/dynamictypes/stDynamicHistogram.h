@@ -64,19 +64,11 @@ public:
   void ExtractHistogram (Image * src);
 
   /**
-   * Returns the size of the histogram
-   */
-  stSize GetSize ();
-
-  /**
    * Returns a value of the histogram
    */
-  double GetData (stSize index);
+  double getData (stSize index);
   
-  /**
-   * Returns the histogram
-   */
-  double * GetData ();
+  double * getData();
 
 private:
 

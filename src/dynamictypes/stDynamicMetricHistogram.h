@@ -15,56 +15,52 @@
  * @author Humberto Razente
  * @author Maria Camila Barioni
  */
-class tDynamicMetricHistogram : public tDynamicType
-{
+class tDynamicMetricHistogram: public tDynamicType {
 public:
 
-  /**
-   * Constructor.
-   */
-  tDynamicMetricHistogram ();
+	/**
+	 * Constructor.
+	 */
+	tDynamicMetricHistogram();
 
-  /**
-   * Destructor.
-   */
-  virtual
-  ~tDynamicMetricHistogram ();
+	/**
+	 * Destructor.
+	 */
+	virtual
+	~tDynamicMetricHistogram();
 
-  /**
-   * Clones the object.
-   */
-  virtual tDynamicMetricHistogram * Clone ();
+	/**
+	 * Clones the object.
+	 */
+	virtual tDynamicMetricHistogram * Clone();
 
-  /**
-   * Gets the object serialized size
-   */
-  virtual stSize GetSerializedSize ();
+	/**
+	 * Gets the object serialized size
+	 */
+	virtual stSize GetSerializedSize();
 
-  /**
-   * Returns the object serialization
-   */
-  virtual const stByte * Serialize ();
+	/**
+	 * Returns the object serialization
+	 */
+	virtual const stByte * Serialize();
 
-  /**
-   * Restores the serialized object.
-   */
-  virtual void Unserialize (const stByte * data, stSize dataSize);
+	/**
+	 * Restores the serialized object.
+	 */
+	virtual void Unserialize(const stByte * data, stSize dataSize);
 
-  /**
-   * Tests if one object is equal to another.
-   */
-  virtual bool IsEqual (tDynamicType * obj);
+	/**
+	 * Tests if one object is equal to another.
+	 */
+	virtual bool IsEqual(tDynamicType * obj);
 
-  /**
-   * Extract the metric histogram from a jpeg file
-   */
-  void
-  ExtractMetricHistogram (const Image *img);
-
+	/**
+	 * Extract the metric histogram from a jpeg file
+	 */
+	void
+	ExtractMetricHistogram(const Image *img);
 
 };
-
-
 
 #endif	/* STDYNAMICMETRICHISTOGRAM_H */
 

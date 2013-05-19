@@ -107,12 +107,7 @@ void tDynamicHistogram::ExtractHistogram(Image * src)
     }
 }
 
-stSize tDynamicHistogram::GetSize()
-{
-    return Size;
-}
-
-double tDynamicHistogram::GetData(stSize index)
+double tDynamicHistogram::getData(stSize index)
 {
     if (index < Size)
         return Data[index];
@@ -120,12 +115,9 @@ double tDynamicHistogram::GetData(stSize index)
         return -1;
 }
 
-double * tDynamicHistogram::GetData()
-{
-    return Data;
+double * tDynamicHistogram::getData() {
+	return tDynamicType::getData();
 }
-
-
 
 void tDynamicHistogram::SetSize(stSize n)
 {
